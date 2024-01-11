@@ -211,6 +211,7 @@ def do_train(
 def do_train_with_center(
         cfg,
         model,
+        fe_model,
         center_criterion,
         train_loader,
         val_loader,
@@ -288,3 +289,13 @@ def do_train_with_center(
                 logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
 
     trainer.run(train_loader, max_epochs=epochs)
+
+    shared_params = [name for name, param in model.named_parameters() if name in fe_model.state_dict()]
+
+    # Tạo từ điển chứa thông số chỉ cho các tham số chia sẻ
+    state_dict_subset = {name: param for name, param in model.state_dict().items() if name in shared_params}
+
+    # Sao chép tham số từ model1 sang model2
+    fe_model.load_state_dict(state_dict_subset, strict=False)
+
+    torch.save(fe_model.state_dict(), '/home/21011492/ReID/reid-strong-baseline/output/market1501/feature_extraction_model_state.pth')

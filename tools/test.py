@@ -22,11 +22,8 @@ from utils.logger import setup_logger
 
 def main():
     parser = argparse.ArgumentParser(description="ReID Baseline Inference")
-    parser.add_argument(
-        "--config_file", default="", help="path to config file", type=str
-    )
-    parser.add_argument("opts", help="Modify config options using the command-line", default=None,
-                        nargs=argparse.REMAINDER)
+    parser.add_argument("--config_file", default="", help="path to config file", type=str)
+    parser.add_argument("opts", help="Modify config options using the command-line", default=None,nargs=argparse.REMAINDER)
 
     args = parser.parse_args()
 

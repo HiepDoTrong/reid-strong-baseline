@@ -9,7 +9,7 @@ from yacs.config import CfgNode as CN
 # For example, the number of images during training will be
 # IMAGES_PER_BATCH_TRAIN, while the number of images for testing will be
 # IMAGES_PER_BATCH_TEST
-
+                                                                                              
 # -----------------------------------------------------------------------------
 # Config definition
 # -----------------------------------------------------------------------------
@@ -26,17 +26,17 @@ _C.MODEL.NAME = 'resnet50'
 # Last stride of backbone
 _C.MODEL.LAST_STRIDE = 1
 # Path to pretrained model of backbone
-_C.MODEL.PRETRAIN_PATH = ''
+_C.MODEL.PRETRAIN_PATH = '/home/21011492/ReID/reid-strong-baseline/modeling/backbones/resnet.py'
 # Use ImageNet pretrained model to initialize backbone or use self trained model to initialize the whole model
 # Options: 'imagenet' or 'self'
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'
 # If train with BNNeck, options: 'bnneck' or 'no'
 _C.MODEL.NECK = 'bnneck'
 # If train loss include center loss, options: 'yes' or 'no'. Loss with center loss has different optimizer configuration
-_C.MODEL.IF_WITH_CENTER = 'no'
+_C.MODEL.IF_WITH_CENTER = 'yes'
 # The loss type of metric loss
 # options:['triplet'](without center loss) or ['center','triplet_center'](with center loss)
-_C.MODEL.METRIC_LOSS_TYPE = 'triplet'
+_C.MODEL.METRIC_LOSS_TYPE = 'triplet_center'
 # For example, if loss type is cross entropy loss + triplet loss + center loss
 # the setting should be: _C.MODEL.METRIC_LOSS_TYPE = 'triplet_center' and _C.MODEL.IF_WITH_CENTER = 'yes'
 
@@ -70,7 +70,7 @@ _C.DATASETS = CN()
 # List of the dataset names for training, as present in paths_catalog.py
 _C.DATASETS.NAMES = ('market1501')
 # Root directory where datasets should be used (and downloaded if not found)
-_C.DATASETS.ROOT_DIR = ('./data')
+_C.DATASETS.ROOT_DIR = ('/home/21011492/ReID/Datasets')
 
 # -----------------------------------------------------------------------------
 # DataLoader
@@ -81,7 +81,7 @@ _C.DATALOADER.NUM_WORKERS = 8
 # Sampler for data loading
 _C.DATALOADER.SAMPLER = 'softmax'
 # Number of instance for one batch
-_C.DATALOADER.NUM_INSTANCE = 16
+_C.DATALOADER.NUM_INSTANCE = 32
 
 # ---------------------------------------------------------------------------- #
 # Solver
@@ -90,7 +90,7 @@ _C.SOLVER = CN()
 # Name of optimizer
 _C.SOLVER.OPTIMIZER_NAME = "Adam"
 # Number of max epoches
-_C.SOLVER.MAX_EPOCHS = 50
+_C.SOLVER.MAX_EPOCHS = 1
 # Base learning rate
 _C.SOLVER.BASE_LR = 3e-4
 # Factor of learning bias
@@ -138,13 +138,13 @@ _C.SOLVER.EVAL_PERIOD = 50
 # Number of images per batch
 # This is global, so if we have 8 GPUs and IMS_PER_BATCH = 16, each GPU will
 # see 2 images per batch
-_C.SOLVER.IMS_PER_BATCH = 64
+_C.SOLVER.IMS_PER_BATCH = 32
 
 # This is global, so if we have 8 GPUs and IMS_PER_BATCH = 16, each GPU will
 # see 2 images per batch
 _C.TEST = CN()
 # Number of images per batch during test
-_C.TEST.IMS_PER_BATCH = 128
+_C.TEST.IMS_PER_BATCH = 32
 # If test with re-ranking, options: 'yes','no'
 _C.TEST.RE_RANKING = 'no'
 # Path to trained model
@@ -158,4 +158,4 @@ _C.TEST.FEAT_NORM = 'yes'
 # Misc options
 # ---------------------------------------------------------------------------- #
 # Path to checkpoint and saved log of trained model
-_C.OUTPUT_DIR = ""
+_C.OUTPUT_DIR = "/home/21011492/ReID/reid-strong-baseline/output"
